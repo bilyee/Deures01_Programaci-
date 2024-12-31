@@ -1,0 +1,166 @@
+-------------------------------------------------------------------------------
+Test set: com.exercicis.TestExercici0
+-------------------------------------------------------------------------------
+Tests run: 35, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.240 s <<< FAILURE! -- in com.exercicis.TestExercici0
+com.exercicis.TestExercici0.testValidarFactors -- Time elapsed: 0.045 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Els factors 'empresa, risc mitjà' haurien de ser vàlids ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1156)
+	at com.exercicis.TestExercici0.testValidarFactors(TestExercici0.java:77)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testModificarClient -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <OK> but was: <El camp edat no existeix.>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+	at com.exercicis.TestExercici0.testModificarClient(TestExercici0.java:303)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testLlistarOperacions -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.exercicis.TestExercici0.testLlistarOperacions(TestExercici0.java:619)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testTaulaOperacionsClient0 -- Time elapsed: 0.012 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+>>>>>>>>>> Diff found >>>>>>>>>>
+Matching text:
+Joan, 30                          [autònom, risc mitjà]
+-------------------------------------------------------
+Tipus                         Data                 Preu
+Gestió laboral                2023-09-01         300.00
+Declaració d'impostos         2023-10-06         150.00
+-------------------------------------------------------
+                                           Suma: 450.00
+Descompte: 10%                             Preu: 405.00
+
+First difference at position 486.
+Received: Impostos:  21% (85.05)                T<difference>
+Expected: Impostos:  21% (85.05)                    Total: 490.05
+<<<<<<<<<< Diff end <<<<<<<<<<
+ ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.exercicis.TestExercici0.testTaulaOperacionsClient0(TestExercici0.java:768)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testTaulaOperacionsClient1 -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+>>>>>>>>>> Diff found >>>>>>>>>>
+Matching text:
+...
+Marta Puig i Puig, 45               [empresa, risc alt]
+-------------------------------------------------------
+Tipus                         Data                 Preu
+Constitució de societat       2024-01-15        1250.50
+Testament                     2024-02-28         755.75
+Acta notarial                 2024-03-10         500.25
+-------------------------------------------------------
+                                          Suma: 2506.50
+Descompte: 10%                            Preu: 2255.85
+
+First difference at position 540.
+Received: Impostos:  21% (473.73)             T<difference>
+Expected: Impostos:  21% (473.73)                  Total: 2729.58
+<<<<<<<<<< Diff end <<<<<<<<<<
+ ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.exercicis.TestExercici0.testTaulaOperacionsClient1(TestExercici0.java:834)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testTaulaOperacionsClient2 -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+>>>>>>>>>> Diff found >>>>>>>>>>
+Matching text:
+...
+Pere Vila, 25                    [estudiant, risc baix]
+-------------------------------------------------------
+Tipus                         Data                 Preu
+Certificat                    2024-01-10          25.50
+Fotocòpia                     2024-01-15          15.25
+Segell                        2024-01-20          35.50
+-------------------------------------------------------
+                                            Suma: 76.25
+Descompte: 10%                              Preu: 68.63
+
+First difference at position 543.
+Received: Impostos:  21% (14.41)                 T<difference>
+Expected: Impostos:  21% (14.41)                     Total: 83.04
+<<<<<<<<<< Diff end <<<<<<<<<<
+ ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.exercicis.TestExercici0.testTaulaOperacionsClient2(TestExercici0.java:900)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testModificarClientMenu -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+Per l'entrada 'client_100\nnom\nMaria\n' a la línia 2:
+>>>>>>>>>> Diff found >>>>>>>>>>
+First difference at position 0.
+Received: E<difference>
+Expected: S'ha modificat el client client_100.
+
+<<<<<<<<<< Diff end <<<<<<<<<<
+ ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.exercicis.TestExercici0.testModificarClientMenu(TestExercici0.java:1351)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.exercicis.TestExercici0.testLlegirEdat -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+Per l'entrada '17\n30\n': No s'ha trobat el missatge d'error esperat.
+Sortida capturada:
+Introdueix l'edat del client (18-100): Edat no vàlida: Introdueix un número entre 18 i 100.
+Introdueix l'edat del client (18-100):  ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.exercicis.TestExercici0.testLlegirEdat(TestExercici0.java:1116)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

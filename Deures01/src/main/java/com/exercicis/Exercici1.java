@@ -87,7 +87,18 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testPrintBoardWithLargeNumbers"
      */
     public static void printBoard() {
-        // TODO
+        System.out.println("+----+----+----+----+");
+        for (int[] row : board) {
+            for (int cell : row) {
+                if (cell == 0) {
+                    System.out.printf("|    ", cell == 0 ? "" : cell);
+                } else {
+                    System.out.printf("|%4d", cell == 0 ? "" : cell);
+                }
+            }
+            System.out.println("|");
+            System.out.println("+----+----+----+----+");
+        }
     }
 
     /**
@@ -102,7 +113,13 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testSpawnDoNotOverwriteExisting"
      */
     public static void spawnTile() {
-        // TODO
+        int x, y;
+        do {
+            x = random.nextInt(SIZE);
+            y = random.nextInt(SIZE);
+        } while (board[x][y] != 0);
+
+        board[x][y] = random.nextInt(10) == 0 ? 4 : 2;
     }
 
     /**
@@ -140,7 +157,40 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testMoveLeftFullRowWithoutMerge"
      */
     public static void moveLeft() {
-        // TODO
+        for (int row = 0; row < SIZE; row++) {
+            // Temporal para guardar los numeros
+            int[] newRow= new int[SIZE];
+            int newIndex = 0;
+
+            // Mover todos los numeros a la izquierda
+            for (int col = 0; col < SIZE; col ++) {
+                if (board[row][col] != 0) {
+                    newRow[newIndex] = board[row][col];
+                    newIndex++;
+                }
+            }
+
+            // Marjen de los numeros
+            for (int i = 0; i < SIZE; i++) {
+                if (newRow[i] != 0 && newRow[i] == newRow[i + 10]) {
+                    newRow[i] *= 2;
+                    newRow[i + 1] = 0;
+                }
+            }
+
+            // Mover todos los numeros a la izquierda
+            int[] finalRow = new int[SIZE];
+            int finalIndex = 0;
+            for(int i = 0; i < SIZE; i++) {
+                if (newRow[i] != 0) {
+                    finalRow[finalIndex] = newRow[i];
+                    finalIndex++;
+                }
+            }
+
+            // Actualizar board
+            board[row] = finalRow;
+        }
     }
 
     /**

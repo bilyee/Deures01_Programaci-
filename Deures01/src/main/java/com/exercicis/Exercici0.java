@@ -128,6 +128,7 @@ public class Exercici0 {
             if ("autònom".equals(tipus) && "risc baix".equals(risc)) {
                 return false;
             }
+            
             return ("autònom".equals(tipus) || "empresa".equals(tipus)) && 
                 ("risc alt".equals(risc) || "risc mitja".equals(risc) || "risc baix".equals(risc));
         }
@@ -181,8 +182,8 @@ public class Exercici0 {
             "Contracte de compravenda", "Contracte de lloguer"
         };
 
-        for (String valid : tipusValids) {
-            if (valid.equals(tipus)) {
+        for (String tipusValid : tipusValids) {
+            if (tipusValid.equals(tipus)) {
                 return true;
             }
         }
@@ -218,11 +219,20 @@ public class Exercici0 {
 
         HashMap<String, Integer> clientCuenta = new HashMap<>();
 
-        for(String client : clientsLlista) {
+        for (String client : clientsLlista) {
+            if (clientCuenta.containsKey(client)) {
+                clientCuenta.put(client, clientCuenta.get(client) + 1);
+            } else {
+                clientCuenta.put(client, 1);
+            }
+        }
+
+        for (String client : clientsLlista) {
             if (clientCuenta.get(client) > 1 || !clientsGlobals.contains(client)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -281,7 +291,7 @@ public class Exercici0 {
         String mesStr = data.substring(5, 7);
         String diaStr = data.substring(8, 10);
 
-        if (isAllDigits(anyStr) || isAllDigits(mesStr) || isAllDigits(diaStr)) {
+        if (!isAllDigits(anyStr) || !isAllDigits(mesStr) || !isAllDigits(diaStr)) {
             return false;
         }
 
@@ -299,7 +309,7 @@ public class Exercici0 {
             return false;
         }
 
-        if ((mes == 4 && mes == 6 && mes == 9 && mes == 1) && dia > 30) {
+        if ((mes == 4 || mes == 6 || mes == 9 || mes == 1) && dia > 30) {
             return false;
         }
         if (mes == 2 && dia > 29) {
@@ -404,12 +414,12 @@ public class Exercici0 {
      */
     public static String modificarClient(String clauClient, String camp, Object nouValor) {
         if (!clients.containsKey(clauClient)) {
-            return "Client '" + clauClient + "' no existeix";
+            return "Client '" + clauClient + "' no existeix.";
         }
 
-        HashMap<String, Object> client = (HashMap<String, Object>)clients.get(clauClient);
+        HashMap<String, Object> client = (HashMap<String, Object>) clients.get(clauClient);
         if (!clients.containsKey(camp)) {
-            return "El camp '" + camp + "' no existeix";
+            return "El camp " + camp + " no existeix.";
         }
 
         client.put(camp, nouValor);
@@ -434,7 +444,7 @@ public class Exercici0 {
      */
     public static String esborrarClient(String clauClient) {
         if (!clients.containsKey(clauClient)) {
-            return "Client amb clau {" + clauClient + "} no existeix";
+            return "Client amb clau " + clauClient + " no existeix.";
         }
 
         clients.remove(clauClient);
@@ -456,7 +466,7 @@ public class Exercici0 {
     public static ArrayList<HashMap<String, HashMap<String, Object>>> llistarClients(ArrayList<String> claus, HashMap<String, Object> condicions) {
 
         ArrayList<HashMap<String, HashMap<String, Object>>> resultat = new ArrayList<>();
-        for(String clau : claus) {
+        for(String clau : clients.keySet()) {
             if (!claus.contains(clau)) {
                 continue;
             }
@@ -465,6 +475,7 @@ public class Exercici0 {
 
             for (String key : condicions.keySet()) {
                 Object valorEsperat = condicions.get(key);
+
                 if (!dades.containsKey(key) || !dades.get(key).equals(valorEsperat)) {
                     coincideix = false;
                     break;
@@ -570,7 +581,7 @@ public class Exercici0 {
                     return "OK";
                 }
                 else {
-                    return "El camp " + camp + " no existeix en l'operació";
+                    return "El camp " + camp + " no existeix en l'operació.";
                 }
             }
         }
@@ -686,7 +697,7 @@ public class Exercici0 {
         for (Object[] columna : columnes) {
             String text = (String) columna[0];
             String alineacio = (String) columna[1];
-            Integer ample = (int) columna[2];
+            int ample = (int) columna[2];
 
             if (text.length() > ample) {
                 text = text.substring(0, ample);
@@ -773,7 +784,7 @@ Impostos:  21% (14.41)                     Total: 83.04
             HashMap<String, Object> client = clients.get(clauClient);
             if (client == null) {
                 ArrayList<String> error = new ArrayList<>();
-                error.add("Client amb clau " + clauClient + " no existeix");
+                error.add("Client amb clau " + clauClient + " no existeix.");
                 return error;
             }
 
@@ -787,7 +798,7 @@ Impostos:  21% (14.41)                     Total: 83.04
             ArrayList<String> linies = new ArrayList<>();
 
             String nomEdat = client.get("nom") + ", " + client.get("edat");
-            String factors = "[" + String.join(",", (ArrayList<String>) client.get("factors")) + "]";
+            String factors = "[" + String.join(", ", (ArrayList<String>) client.get("factors")) + "]";
 
             ArrayList<Object[]> columnesCapcalera = new ArrayList<>();
             columnesCapcalera.add(new Object[]{nomEdat, "left", 25});
@@ -809,7 +820,7 @@ Impostos:  21% (14.41)                     Total: 83.04
                 columnesOperacions.add(new Object[]{operacio.get("tipus").toString(), "left", 30});
                 columnesOperacions.add(new Object[]{operacio.get("data").toString(), "left", 10});
                 
-                Double preu = ((Number) operacio.get("preu")).doubleValue();
+                double preu = ((Number) operacio.get("preu")).doubleValue();
                 columnesOperacions.add(new Object[]{String.format("%.2f", preu), "right", 15});
                 linies.add(alineaColumnes(columnesOperacions));
 
@@ -834,7 +845,7 @@ Impostos:  21% (14.41)                     Total: 83.04
             linies.add(alineaColumnes(columnesDescomptes));
 
             ArrayList<Object[]> columnesImpostos = new ArrayList<>();
-            columnesImpostos.add(new Object[]{String.format("Impostos: 21%% (%.2f)", impostos), "left", 30});
+            columnesImpostos.add(new Object[]{String.format("Impostos:  21%% (%.2f)", impostos), "left", 30});
             columnesImpostos.add(new Object[]{String.format("Total: %,2f", total), "right", 25});
             linies.add(alineaColumnes(columnesImpostos));
 
@@ -885,10 +896,10 @@ Impostos:  21% (14.41)                     Total: 83.04
      */
     public static ArrayList<String> getLlistarClientsMenu() {
         ArrayList<String> linies = new ArrayList<>();
-        linies.add("=== Listar Clients ===");
+        linies.add("=== Llistar Clients ===");
 
         if (clients.isEmpty()) {
-            linies.add("No hi ha clients per mostrar");
+            linies.add("No hi ha clients per mostrar.");
             return linies;
         }
 
@@ -968,7 +979,7 @@ Impostos:  21% (14.41)                     Total: 83.04
                     return palabraClau;
                 }
             }
-            System.out.println("Opció no valida. Torna a intentar-ho.");
+            System.out.println("Opció no vàlida. Torna a intentar-ho.");
         }
     }
 
@@ -1049,7 +1060,7 @@ Impostos:  21% (14.41)                     Total: 83.04
 
         String promptFactor2 = factor1.equals("autònom")
                 ? "Introdueix el segon factor ('risc alt' o 'risc mitjà'): "
-                : "Introdueix el segon factor ('risc alt' o 'risc baix' o 'risc mitjà'): ";
+                : "Introdueix el segon factor ('risc alt', 'risc baix' o 'risc mitjà'): ";
         
         System.out.print(promptFactor2);
         String factor2 = scanner.nextLine().trim();
@@ -1127,21 +1138,21 @@ Impostos:  21% (14.41)                     Total: 83.04
      */
     public static ArrayList<String> afegirClientMenu(Scanner scanner) {
         ArrayList<String> linies = new ArrayList<>();
-        linies.add("=== Afegir Client === ");
+        linies.add("=== Afegir Client ===");
 
         String nom = llegirNom(scanner);
         int edat = llegirEdat(scanner);
         ArrayList<String> factors = llegirFactors(scanner);
 
         if (!validarFactors(factors.toArray(new String[0]))) {
-            linies.add("Els factors no són vàlids");
+            linies.add("Els factors no són vàlids.");
             return linies;
         }
         
         double descompte = llegirDescompte(scanner);
 
         String novaClau = afegirClient(nom, edat, factors, descompte);
-        linies.add("S'ha afegir el client amb clau " + novaClau + ".");
+        linies.add("S'ha afegit el client amb clau " + novaClau + ".");
 
         return linies;
     }
@@ -1200,7 +1211,7 @@ Impostos:  21% (14.41)                     Total: 83.04
         System.out.print("Introdueix el camp que vols modificar: ");
         String camp = scanner.nextLine().trim();
         if (!Arrays.asList("nom", "edat", "factors", "descompte").contains(camp)) {
-            linies.add("El camp " + camp + " no és v`slid.");
+            linies.add("El camp " + camp + " no és vàlid.");
             return linies;
         }
 
@@ -1210,7 +1221,7 @@ Impostos:  21% (14.41)                     Total: 83.04
             case "factors" -> {
                 ArrayList<String> factors = llegirFactors(scanner);
                 if (!validarFactors(factors.toArray(new String[0]))) {
-                    linies.add("Els factors no són vàlids");
+                    linies.add("Els factors no són vàlids.");
                     yield null;
                 }
                 yield factors;
@@ -1226,8 +1237,7 @@ Impostos:  21% (14.41)                     Total: 83.04
         String resultat = modificarClient(clauClient, camp, nouValor);
         if (!resultat.equals("OK")) {
             linies.add(resultat);
-        }
-        else {
+        } else {
             linies.add("S'ha modificat el client " + clauClient + ".");
         }
 
@@ -1268,9 +1278,8 @@ Impostos:  21% (14.41)                     Total: 83.04
         String resultat = esborrarClient(clauClient);
         if (!resultat.equals("OK")) {
             linies.add(resultat);
-        }
-        else {
-            linies.add("S'ha esborrar el client " + clauClient + ".");
+        } else {
+            linies.add("S'ha esborrat el client " + clauClient + ".");
         }
 
         return linies;
@@ -1295,7 +1304,7 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @param scanner L'objecte Scanner per llegir l'entrada de l'usuari.
      */
     public static void gestionaClientsOperacions(Scanner scanner) {
-        ArrayList<String> menu = new ArrayList<>();
+        ArrayList<String> menu = getCadenesMenu();
         ArrayList<String> resultat = new ArrayList<>();
 
         while (true) {
@@ -1304,7 +1313,7 @@ Impostos:  21% (14.41)                     Total: 83.04
             dibuixarLlista(resultat);
         
 
-            String opcio = scanner.nextLine().trim();
+            String opcio = obtenirOpcio(scanner);
 
             switch (opcio.toLowerCase(Locale.ROOT)) {
                 case "sortir":
