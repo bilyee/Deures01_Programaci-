@@ -163,7 +163,7 @@ public class Exercici1 {
             int newIndex = 0;
 
             // Mover todos los numeros a la izquierda
-            for (int col = 0; col < SIZE; col ++) {
+            for (int col = 0; col < SIZE; col++) {
                 if (board[row][col] != 0) {
                     newRow[newIndex] = board[row][col];
                     newIndex++;
@@ -172,7 +172,7 @@ public class Exercici1 {
 
             // Marjen de los numeros
             for (int i = 0; i < SIZE; i++) {
-                if (newRow[i] != 0 && newRow[i] == newRow[i + 10]) {
+                if (newRow[i] != 0 && newRow[i] == newRow[i + 1]) {
                     newRow[i] *= 2;
                     newRow[i + 1] = 0;
                 }
@@ -228,12 +228,12 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testMoveRightFullColumnWithoutMerge"
      */
     public static void moveRight() {
-        for (int row = 0; row < SIZE; row ++) {
+        for (int row = 0; row < SIZE; row++) {
             int[] newRow = new int[SIZE];
             int newIndex = SIZE - 1;
 
             // Moure tots els numeros cap a la dreta
-            for (int col = SIZE - 1; col >= 0; col --) {
+            for (int col = SIZE - 1; col >= 0; col--) {
                 if (board[row][col] != 0) {
                     newRow[newIndex] = board[row][col];
                     newIndex--;
@@ -252,7 +252,7 @@ public class Exercici1 {
             int[] finalRow = new int[SIZE];
             int finalIndex = SIZE - 1;
 
-            for (int i = SIZE - 1; i >= 0; i --) {
+            for (int i = SIZE - 1; i >= 0; i--) {
                 if (newRow[i] != 0) {
                     finalRow[finalIndex] = newRow[i];
                     finalIndex--;
@@ -299,12 +299,12 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testMoveUpFullColumnWithoutMerge"
      */
     public static void moveUp() {
-        for (int col = 0; col < SIZE; col ++) {
+        for (int col = 0; col < SIZE; col++) {
             int[] newCol = new int[SIZE];
             int newIndex = 0;
 
             // Primer movimiento para arriba
-            for (int row = 0; row < SIZE; row ++) {
+            for (int row = 0; row < SIZE; row++) {
                 if (board[row][col] != 0) {
                     newCol[newIndex] = board[row][col];
                     newIndex++;
@@ -312,7 +312,7 @@ public class Exercici1 {
             }
 
             // Marjen de los numeros
-            for (int i = 0; i < SIZE - 1; i ++) {
+            for (int i = 0; i < SIZE - 1; i++) {
                 if (newCol[i] != 0 && newCol[i] == newCol[i + 1]) {
                     newCol[i] *= 2;
                     newCol[i + 1] = 0;
@@ -402,7 +402,7 @@ public class Exercici1 {
             }
 
             // Actualizamos la tabla
-            for (int row = 0; row < SIZE; row ++) {
+            for (int row = 0; row < SIZE; row++) {
                 board[row][col] = finalCol[row];
             }
         }
@@ -426,8 +426,28 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testGameWinWithMultipleConditions"
      */
     public static String isGameFinished() {
-        // TODO
-        return "continue";
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if (board[row][col] == 128) {
+                    return "win";
+                }
+            }
+        }
+
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if (board[row][col] == 0) {
+                    return "continue";
+                }
+                if (row > 0 && board[row][col] == board[row - 1][col]) {
+                    return "continue";
+                }
+                if (row > 0 && board[row][col] == board[row][col - 1]) {
+                    return "continue";
+                }
+            }
+        }
+        return "lost";
     }
 
     /**
@@ -458,7 +478,55 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testPlayMixedCaseCommands"
      */
     public static void play(Scanner scanner) {
-        // TODO
+        String message = "";
+
+        spawnTile();
+        while (true) {
+            spawnTile();
+
+            clearScreen();
+            printBoard();
+            if (message.compareTo("") != -1) {
+                System.out.println(message);
+            }
+
+            String gameFinished = isGameFinished();
+            if (gameFinished.equals("win")) {
+                System.out.println("You win, congrats!");
+                break;
+            }
+            if (gameFinished.equals("lost")) {
+                System.out.println("Game over, you are a loser!");
+                break;
+            }
+
+            System.out.println("Enter move (left, up, right, down, exit): ");
+            String move = scanner.nextLine().toLowerCase();
+
+            switch (move) {
+                case "l":
+                case "left":
+                    moveLeft();
+                    break;
+                case "r":
+                case "right":
+                    moveRight();
+                    break;
+                case "u":
+                case "up":
+                    moveUp();
+                    break;
+                case "d":
+                case "down":
+                    moveDown();
+                    break;
+                case "exit":
+                    System.out.println("Exit game ...");
+                    return;
+                default:
+                    message = "Invalid move!";
+            }
+        }
     }
 
     /**
