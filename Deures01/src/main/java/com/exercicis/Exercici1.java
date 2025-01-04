@@ -241,8 +241,8 @@ public class Exercici1 {
             }
 
             // Marjen de los numeros
-            for (int i = SIZE - 1; i >= 0; i--) {
-                if (newRow[i] != 0 && newRow[1] == newRow[i - 1]) {
+            for (int i = SIZE - 1; i > 0; i--) {
+                if (newRow[i] != 0 && newRow[i] == newRow[i - 1]) {
                     newRow[i] *= 2;
                     newRow[i - 1] = 0;
                 }
@@ -384,7 +384,7 @@ public class Exercici1 {
             }
 
             // Hacemos el margen de los numeros
-            for (int i = SIZE - 1; i >= 0; i--) {
+            for (int i = SIZE - 1; i > 0; i--) {
                 if (newCol[i] != 0 && newCol[i] == newCol[i - 1]) {
                     newCol[i] *= 2;
                     newCol[i - 1] = 0;
@@ -396,7 +396,7 @@ public class Exercici1 {
             int finalIndex = SIZE - 1;
             for (int i = SIZE - 1; i >= 0; i--) {
                 if (newCol[i] != 0) {
-                    finalCol[finalIndex] = finalCol[i];
+                    finalCol[finalIndex] = newCol[i];
                     finalIndex--;
                 }
             }
@@ -442,7 +442,7 @@ public class Exercici1 {
                 if (row > 0 && board[row][col] == board[row - 1][col]) {
                     return "continue";
                 }
-                if (row > 0 && board[row][col] == board[row][col - 1]) {
+                if (col > 0 && board[row][col] == board[row][col - 1]) {
                     return "continue";
                 }
             }
