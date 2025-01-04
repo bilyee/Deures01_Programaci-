@@ -130,7 +130,7 @@ public class Exercici0 {
             }
             
             return ("autònom".equals(tipus) || "empresa".equals(tipus)) && 
-                ("risc alt".equals(risc) || "risc mitja".equals(risc) || "risc baix".equals(risc));
+                ("risc alt".equals(risc) || "risc mitjà".equals(risc) || "risc baix".equals(risc));
         }
         return false;
     }
@@ -418,7 +418,7 @@ public class Exercici0 {
         }
 
         HashMap<String, Object> client = (HashMap<String, Object>) clients.get(clauClient);
-        if (!clients.containsKey(camp)) {
+        if (!client.containsKey(camp)) {
             return "El camp " + camp + " no existeix.";
         }
 
@@ -631,7 +631,7 @@ public class Exercici0 {
             boolean coincideix = true;
 
             if (condicions != null && !condicions.isEmpty()) {
-                for (String key : operacio.keySet()) {
+                for (String key : condicions.keySet()) {
                     if (!operacio.containsKey(key) || !operacio.get(key).equals(condicions.get(key))) {
                         coincideix = false;
                         break;
@@ -846,7 +846,7 @@ Impostos:  21% (14.41)                     Total: 83.04
 
             ArrayList<Object[]> columnesImpostos = new ArrayList<>();
             columnesImpostos.add(new Object[]{String.format("Impostos:  21%% (%.2f)", impostos), "left", 30});
-            columnesImpostos.add(new Object[]{String.format("Total: %,2f", total), "right", 25});
+            columnesImpostos.add(new Object[]{String.format("Total: %.2f", total), "right", 25});
             linies.add(alineaColumnes(columnesImpostos));
 
             return linies;
@@ -1022,7 +1022,7 @@ Impostos:  21% (14.41)                     Total: 83.04
         String edatInput = scanner.nextLine().trim();
 
         while (!isAllDigits(edatInput) || !validarEdat(Integer.parseInt(edatInput))) {
-            System.out.println("Edat no vàlida: Introdueix un número entre 18 i 100.");
+            System.out.println("Edat no vàlida. Introdueix un número entre 18 i 100.");
             System.out.print("Introdueix l'edat del client (18-100): ");
             edatInput = scanner.nextLine().trim();
         }
@@ -1203,7 +1203,7 @@ Impostos:  21% (14.41)                     Total: 83.04
         System.out.print("Introdueix la clau del client a modificar (per exemple, 'client_100'): ");
         String clauClient = scanner.nextLine().trim();
         if (!clients.containsKey(clauClient)) {
-            linies.add("Client amb clar " + clauClient + " no existeix.");
+            linies.add("Client amb clau " + clauClient + " no existeix.");
             return linies;
         }
 
