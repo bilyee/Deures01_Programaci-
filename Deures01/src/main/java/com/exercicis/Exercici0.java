@@ -183,11 +183,11 @@ public class Exercici0 {
         };
 
         for (String tipusValid : tipusValids) {
-            if (tipusValid.equals(tipus)) {
+            if (tipusValid.equals(tipus)) { // Si el tipus de validació equival al que hem posat nosatres, regresem True
                 return true;
             }
         }
-        return false;
+        return false; // Sino es equivalent al que hem posat nosaltres, regresem False
     }
 
     /**
@@ -221,9 +221,9 @@ public class Exercici0 {
 
         for (String client : clientsLlista) {
             if (clientCuenta.containsKey(client)) {
-                clientCuenta.put(client, clientCuenta.get(client) + 1);
+                clientCuenta.put(client, clientCuenta.get(client) + 1); // Si el client ja existeix al mapa, incrementem el seu comptador.
             } else {
-                clientCuenta.put(client, 1);
+                clientCuenta.put(client, 1); // Si el client no existeix al mapa, el creem amb valor inicial 1.
             }
         }
 
@@ -283,6 +283,7 @@ public class Exercici0 {
             return false;
         }
 
+        // Verificació de la posició dels guions en la data
         if (data.charAt(4) != '-' || data.charAt(7) != '-') {
             return false;
         }
@@ -309,9 +310,11 @@ public class Exercici0 {
             return false;
         }
 
+        // Mesos amb 30 dies
         if ((mes == 4 || mes == 6 || mes == 9 || mes == 1) && dia > 30) {
             return false;
         }
+        // Mes de febrer
         if (mes == 2 && dia > 29) {
             return false;
         }
@@ -354,8 +357,8 @@ public class Exercici0 {
 
         do {
             int numeroAleatori = 100 + random.nextInt(900);
-            clau = "client_" + numeroAleatori;
-        } while (clients.containsKey(clau));
+            clau = "client_" + numeroAleatori; // Client_ + els numeros random
+        } while (clients.containsKey(clau)); // Bucle while que s'efectua mentre el diccionari clients contingui una clau
 
         return clau;
     }
@@ -380,13 +383,13 @@ public class Exercici0 {
      */
     public static String afegirClient(String nom, int edat, ArrayList<String> factors, double descompte) {
         String novaClau = generaClauClient();
-
+        // Emmagatzem la informacio del nou client en un HashMap
         HashMap<String, Object> clientInfo = new HashMap<>();
         clientInfo.put("nom", nom);
         clientInfo.put("edat", edat);
         clientInfo.put("factors", factors);
         clientInfo.put("descompte", descompte);
-
+        // Fiquem la clau y el HashMap amb l'informació del nou client al diccionari principal de clients
         clients.put(novaClau, clientInfo);
 
         return novaClau;
@@ -413,16 +416,17 @@ public class Exercici0 {
      * @test ./runTest.sh "com.exercicis.TestExercici0#testModificarClient"
      */
     public static String modificarClient(String clauClient, String camp, Object nouValor) {
+        // Si la clau del client no coincideix amb les claus del HashMap de clients, mostrem missatge d'error
         if (!clients.containsKey(clauClient)) {
             return "Client '" + clauClient + "' no existeix.";
         }
-
+        // Si el camp no coincideix amb els camps del HashMap de clients, mostrem missatge d'error
         HashMap<String, Object> client = (HashMap<String, Object>) clients.get(clauClient);
         if (!client.containsKey(camp)) {
             return "El camp " + camp + " no existeix.";
         }
 
-        client.put(camp, nouValor);
+        client.put(camp, nouValor); // Si la clau/camp existeix, la modifiquem i l'emmagatzem de nou al diccionari
 
         return "OK";
     }
@@ -443,11 +447,12 @@ public class Exercici0 {
      * @test ./runTest.sh "com.exercicis.TestExercici0#testEsborrarClient"
      */
     public static String esborrarClient(String clauClient) {
+        // Si la clau del client no coincideix amb les claus del HashMap de clients, mostrem missatge d'error
         if (!clients.containsKey(clauClient)) {
             return "Client amb clau " + clauClient + " no existeix.";
         }
 
-        clients.remove(clauClient);
+        clients.remove(clauClient); // Si la clau existeix, l'eliminem del diccionari
         return "OK";
     }
 
@@ -467,21 +472,26 @@ public class Exercici0 {
 
         ArrayList<HashMap<String, HashMap<String, Object>>> resultat = new ArrayList<>();
         for(String clau : clients.keySet()) {
+            // Si la clau no esta a la llista, continuem amb la següent iteració
             if (!claus.contains(clau)) {
                 continue;
             }
-            HashMap<String, Object> dades = clients.get(clau);
-            boolean coincideix = true;
+            HashMap<String, Object> dades = clients.get(clau); // Obtenim les dades asociades a la clau del client
+            boolean coincideix = true; // Inicialitzem un marcador per comprovar
 
+            // Recorrem totes les condiciones especificades
             for (String key : condicions.keySet()) {
-                Object valorEsperat = condicions.get(key);
+                Object valorEsperat = condicions.get(key); // Obtenim el valor esperat
 
+                // Si el HashMap de dades no conte claus especialitzades o el valor associat no coincideix amb el valorEsperat
+                // Si no es compleix això, la coincidencia es False i sortim del bucle
                 if (!dades.containsKey(key) || !dades.get(key).equals(valorEsperat)) {
                     coincideix = false;
                     break;
                 }
             }
 
+            // Si les condicions es compleixen, fiquem el client al llistat de resultat
             if (coincideix) {
                 HashMap<String, HashMap<String, Object>> clientValid = new HashMap<>();
                 clientValid.put(clau, dades);
@@ -507,16 +517,17 @@ public class Exercici0 {
         boolean existeix;
         do {
             int numeroAleatori = 100 + random.nextInt(900);
-            clau = "operacio_" + numeroAleatori;
+            clau = "operacio_" + numeroAleatori; // Operacio_ + els numeros random 
 
             existeix = false;
-            for(HashMap<String, Object> operacio : operacions) {
+            for (HashMap<String, Object> operacio : operacions) {
+                // Si la clau existeix a la llista operacions, sortim del bucle
                 if (clau.equals(operacio.get("id"))) {
                     existeix = true;
                     break;
                 }
             }
-        } while (existeix);
+        } while (existeix); // Fem el bucle while mentre que no coincideixin les claus
 
         return clau;
     }
@@ -548,7 +559,8 @@ public class Exercici0 {
             String data,
             String observacions,
             double preu) {
-
+        
+        // Crearem un nou HashMap per a les noves operacions
         String nouId = generaClauClient();
         HashMap<String, Object> novaOperacio = new HashMap<>();
         novaOperacio.put("id", nouId);
@@ -557,7 +569,8 @@ public class Exercici0 {
         novaOperacio.put("data", data);
         novaOperacio.put("observacions", observacions);
         novaOperacio.put("preu", preu);
-
+        
+        // Fiquem les noves operacions dins de la llista de operacions originals
         operacions.add(novaOperacio);
         return nouId;
     }
@@ -575,17 +588,20 @@ public class Exercici0 {
      */
     public static String modificarOperacio(String idOperacio, String camp, Object nouValor) {
         for (HashMap<String, Object> operacio : operacions) {
+            // Si la id dins de la operació equivals
             if (operacio.get("id").equals(idOperacio)) {
+                // Si el camp de l'operacio la conté, la modifiquem i la fiquem dins de la llista
                 if (operacio.containsKey(camp)) {
                     operacio.put(camp, nouValor);
-                    return "OK";
+                    return "OK"; // Regresem un OK
                 }
                 else {
+                    // Sino existeix el camp, mostrem missatge d'error
                     return "El camp " + camp + " no existeix en l'operació.";
                 }
             }
         }
-        return "Operació amb id " + idOperacio + " no existeix.";
+        return "Operació amb id " + idOperacio + " no existeix."; // Sino existeix la id, mostrem missatge d'error
     }
 
     /**
@@ -598,13 +614,14 @@ public class Exercici0 {
      */
     public static String esborrarOperacio(String idOperacio) {
         for (int i = 0; i < operacions.size(); i++) {
-            HashMap<String, Object> operacio = operacions.get(i);
+            HashMap<String, Object> operacio = operacions.get(i); // Fem una copia del HashMap amb l'identificador de l'operació
+            // Si la id de l'operació coincideix dins de la llista d'operacions, l'eliminem de la llista
             if (operacio.get("id").equals(idOperacio)) {
                 operacions.remove(i);
-                return "OK";
+                return "OK"; // Regresem un OK
             }
         }
-        return "Operació amb id " + idOperacio + " no existeix.";
+        return "Operació amb id " + idOperacio + " no existeix."; // Si no existeix, mostrem missatge d'error
     }
 
     /**
@@ -621,17 +638,20 @@ public class Exercici0 {
     public static ArrayList<HashMap<String, Object>> llistarOperacions(
             ArrayList<String> ids,
             HashMap<String, Object> condicions) {
-
+        
+        // Crearem la llista de resultats
         ArrayList<HashMap<String,Object>> resultat = new ArrayList<>();
         for (HashMap<String, Object> operacio : operacions) {
+            // Si hi ha una llista d'IDs i l'operació actual no hi és, la saltem.
             if (ids != null && !ids.isEmpty() && !ids.contains(operacio.get("id"))) {
                 continue;
             }
 
-            boolean coincideix = true;
+            boolean coincideix = true; // Comprovem si l'operació compleix les condicions especificades.
 
             if (condicions != null && !condicions.isEmpty()) {
                 for (String key : condicions.keySet()) {
+                    // Si falta alguna condicio o no hi hes, marcarem con que no coincideix
                     if (!operacio.containsKey(key) || !operacio.get(key).equals(condicions.get(key))) {
                         coincideix = false;
                         break;
@@ -639,6 +659,7 @@ public class Exercici0 {
                 }
             }
 
+            // Si compleix les condicions, la fiquem a la llista de resultat
             if (coincideix) {
                 resultat.add(operacio);
             }
@@ -656,10 +677,11 @@ public class Exercici0 {
      * @test ./runTest.sh "com.exercicis.TestExercici0#testLlistarOperacionsClient"
      */
     public static ArrayList<HashMap<String, Object>> llistarOperacionsClient(String clauClient) {
-        ArrayList<HashMap<String, Object>> resultat = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> resultat = new ArrayList<>(); // Crearem la llista de resultats
 
         for (HashMap<String, Object> operacio : operacions) {
-            ArrayList<String> clients = (ArrayList<String>) operacio.get("clients");
+            ArrayList<String> clients = (ArrayList<String>) operacio.get("clients"); // Crearem una llista amb el clients de dintre de les operacions
+            // Si els clients no son nulls i hi estan dins de les operacions, fiquem l'operació dins de la llista resultat
             if (clients != null && clients.contains(clauClient)) {
                 resultat.add(operacio);
             }
@@ -692,19 +714,25 @@ public class Exercici0 {
      * @test ./runTest.sh "com.exercicis.TestExercici0#testAlineaColumnes"
      */
     public static String alineaColumnes(ArrayList<Object[]> columnes) {
+        // Utilitzem un StringBuilder per construir el resultat formatat.
         StringBuilder result = new StringBuilder();
 
+        // Recorrem cada columna
         for (Object[] columna : columnes) {
+            // Obtenim el text, l'alineació i l'amplada de la columna
             String text = (String) columna[0];
             String alineacio = (String) columna[1];
             int ample = (int) columna[2];
-
+            
+            // Retallem el text si supera l'amplada del text
             if (text.length() > ample) {
                 text = text.substring(0, ample);
             }
 
+            // Calculem els espais 
             int espais = ample - text.length();
 
+            // Alineem el text segons l'especificació ('left', 'right', 'center')
             switch (alineacio) {
                 case "left":
                     result.append(text);
@@ -723,7 +751,7 @@ public class Exercici0 {
                     break;
             }
         }
-        return result.toString();
+        return result.toString(); // Regresem amb format de String el "result"
     }
 
     /**
@@ -781,13 +809,16 @@ Impostos:  21% (14.41)                     Total: 83.04
         try {
             Locale.setDefault(Locale.US);
 
+            // Crearem un HashMap amb les claus dels clients
             HashMap<String, Object> client = clients.get(clauClient);
+            // Si el client es null, mostrem missatge d'error
             if (client == null) {
                 ArrayList<String> error = new ArrayList<>();
                 error.add("Client amb clau " + clauClient + " no existeix.");
                 return error;
             }
-
+            
+            // Comparem el les operacions dels clients de cada un
             ArrayList<HashMap<String, Object>> operacionsClient = llistarOperacionsClient(clauClient);
             operacionsClient.sort((o1, o2) -> {
                 Object val1 = o1.get(ordre);
@@ -795,28 +826,31 @@ Impostos:  21% (14.41)                     Total: 83.04
                 return val1.toString().compareTo(val2.toString());
             });
 
-            ArrayList<String> linies = new ArrayList<>();
+            ArrayList<String> linies = new ArrayList<>(); // Fem una llista per afegir les linies/columnes
 
-            String nomEdat = client.get("nom") + ", " + client.get("edat");
-            String factors = "[" + String.join(", ", (ArrayList<String>) client.get("factors")) + "]";
+            String nomEdat = client.get("nom") + ", " + client.get("edat"); // Nom i edat del client
+            String factors = "[" + String.join(", ", (ArrayList<String>) client.get("factors")) + "]"; // Quina posició/factor esta dins (empresa o autònom)
 
-            ArrayList<Object[]> columnesCapcalera = new ArrayList<>();
+            // Ajustem l'informació anteriorment emmagatzemada
+            ArrayList<Object[]> columnesCapcalera = new ArrayList<>(); // Fem una llista per ficar l'informació de la capçalera
             columnesCapcalera.add(new Object[]{nomEdat, "left", 25});
             columnesCapcalera.add(new Object[]{factors, "right", 30});
             linies.add(alineaColumnes(columnesCapcalera));
 
-            linies.add("-".repeat(55));
+            linies.add("-".repeat(55)); // Fem un separador 
 
-            ArrayList<Object[]> columnesTitols = new ArrayList<>();
+            // Ajustem l'informació dels titols
+            ArrayList<Object[]> columnesTitols = new ArrayList<>(); // Fem una llista per ficar l'informació de la capçalera
             columnesTitols.add(new Object[]{"Tipus", "left", 30});
             columnesTitols.add(new Object[]{"Data", "left", 10});
             columnesTitols.add(new Object[]{"Preu", "right", 15});
             linies.add(alineaColumnes(columnesTitols));
 
-            Double sumaPreus = 0.0;
+            Double sumaPreus = 0.0; // Variable per saber la suma totals dels preus
 
-            for (HashMap<String, Object> operacio : operacionsClient) {
-                ArrayList<Object[]> columnesOperacions = new ArrayList<>();
+            // Bucle per repasar les seves operacions
+            for (HashMap<String, Object> operacio : operacionsClient) { 
+                ArrayList<Object[]> columnesOperacions = new ArrayList<>(); // Fem una llista per ficar l'informació de les operacions
                 columnesOperacions.add(new Object[]{operacio.get("tipus").toString(), "left", 30});
                 columnesOperacions.add(new Object[]{operacio.get("data").toString(), "left", 10});
                 
@@ -824,32 +858,36 @@ Impostos:  21% (14.41)                     Total: 83.04
                 columnesOperacions.add(new Object[]{String.format("%.2f", preu), "right", 15});
                 linies.add(alineaColumnes(columnesOperacions));
 
-                sumaPreus += preu;
+                sumaPreus += preu; // Sumem els preus a la variable 'sumaPreus'
             }
 
-            linies.add("-".repeat(55));
+            linies.add("-".repeat(55)); // Fem un separador
 
+            // Fem els calculs necesaris per mostrar a la taula 
             int descomptePercentatge = 10;
             double percentatge = (100 - descomptePercentatge);
             double preuDescomptat = sumaPreus * (percentatge / 100.0);
             double impostos = preuDescomptat * 0.21;
             double total = preuDescomptat + impostos;
 
-            ArrayList<Object[]> columnesTotals = new ArrayList<>();
+            // Mostrem la suma dels preus (sense descomptes)
+            ArrayList<Object[]> columnesTotals = new ArrayList<>(); // Fem una llista per ficar l'informació de la suma dels preus
             columnesTotals.add(new Object[]{String.format("Suma: %.2f", sumaPreus), "right", 55});
             linies.add(alineaColumnes(columnesTotals));
 
-            ArrayList<Object[]> columnesDescomptes = new ArrayList<>();
+            // Mostrem la suma dels preus (amb els descomptes)
+            ArrayList<Object[]> columnesDescomptes = new ArrayList<>(); // Fem una llista per ficar l'informació de la suma amb descomptes
             columnesDescomptes.add(new Object[]{String.format("Descompte: %d%%", descomptePercentatge), "left", 30});
             columnesDescomptes.add(new Object[]{String.format("Preu: %.2f", preuDescomptat), "right", 25});
             linies.add(alineaColumnes(columnesDescomptes));
 
-            ArrayList<Object[]> columnesImpostos = new ArrayList<>();
+            // Mostrem la suma dels preus (amb els impostos)
+            ArrayList<Object[]> columnesImpostos = new ArrayList<>(); // Fem una llista per ficar l'informació de la suma amb els impostos
             columnesImpostos.add(new Object[]{String.format("Impostos:  21%% (%.2f)", impostos), "left", 30});
             columnesImpostos.add(new Object[]{String.format("Total: %.2f", total), "right", 25});
             linies.add(alineaColumnes(columnesImpostos));
 
-            return linies;
+            return linies; // Regresem la taula amb la informació
         } finally {
             Locale.setDefault(defaultLocale);
         }
@@ -895,16 +933,18 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testLlistarClientsMenu"
      */
     public static ArrayList<String> getLlistarClientsMenu() {
-        ArrayList<String> linies = new ArrayList<>();
-        linies.add("=== Llistar Clients ===");
+        ArrayList<String> linies = new ArrayList<>(); // Fem una llista per ficar els titols
+        linies.add("=== Llistar Clients ==="); // Fiquem el titol
 
+        // Si els clients no tenen informació, mostrem missatge d'error
         if (clients.isEmpty()) {
-            linies.add("No hi ha clients per mostrar.");
+            linies.add("No hi ha clients per mostrar."); // Fiquem el missatge a la llista
             return linies;
         }
 
+        // Fem un bucle per mostrar l'informació dels clients (Clau: Nom client)
         for (String clau : clients.keySet()) {
-            linies.add(clau + ": " + clients.get(clau).toString());
+            linies.add(clau + ": " + clients.get(clau).toString()); // Fiquem el llistar dels clients
         }
 
         return linies;
