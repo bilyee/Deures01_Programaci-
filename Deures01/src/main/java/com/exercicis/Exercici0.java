@@ -990,17 +990,20 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testObtenirOpcio"
      */
     public static String obtenirOpcio(Scanner scanner) {
-        ArrayList<String> menu = getCadenesMenu();
-    
+        ArrayList<String> menu = getCadenesMenu(); // Fem una llista amb el menu
+        
+        // Fem un bucle While que sea True
         while (true) {
             System.out.print("Selecciona una opció (número o paraula clau): ");
             String opcio = scanner.nextLine();
 
             try {
                 int index = Integer.parseInt(opcio);
+                // Si l'opció que escollim es 0, sortim
                 if (index == 0) {
                     return "Sortir";
                 }
+                // Si l'index es major que 0 i esta dins dels numeros del menu, regresem l'opcio corresponent
                 else if (index > 0 && index < menu.size() - 1) {
                     return menu.get(index).substring(3).trim();
                 }
@@ -1009,8 +1012,10 @@ Impostos:  21% (14.41)                     Total: 83.04
                 // Si no és un número, continuem amb la comprovació de paraula clau
             }
 
+            // Normalitzem l'opció introduïda per evitar problemes amb majúscules/minúscules o accents.
             String opcioNormalized = opcio.trim().toLowerCase().replace("ó", "o");
 
+            // Recorrem el menu per buscar coincidencias amb la palabra clau
             for (int i = 0; i < menu.size(); i ++) {
                 String palabraClau = menu.get(i).substring(3).trim();
                 String palabraClauNormalized = palabraClau.toLowerCase().replace("ó", "o");
@@ -1019,6 +1024,8 @@ Impostos:  21% (14.41)                     Total: 83.04
                     return palabraClau;
                 }
             }
+
+            // Si cap opció es valida, l'usuari ha d'intentar un altre cop
             System.out.println("Opció no vàlida. Torna a intentar-ho.");
         }
     }
@@ -1035,9 +1042,11 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testLlegirNom"
      */
     public static String llegirNom(Scanner scanner) {
+        // Fiquem el nom del client que volem assignar
         System.out.print("Introdueix el nom del client: ");
         String nom = scanner.nextLine();
 
+        // Si el nom no pasa la validació del nom, mostrarem missatge d'error i el ficarem en un bucle fins que el nom sigui correcte
         while (!validarNom(nom)) {
             System.out.println("Nom no vàlid. Només s'accepten lletres i espais.");
             System.out.print("Introdueix el nom del client: ");
@@ -1058,9 +1067,10 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testLlegirEdat"
      */
     public static int llegirEdat(Scanner scanner) {
+        // Introduim una edat per al client
         System.out.print("Introdueix l'edat del client (18-100): ");
         String edatInput = scanner.nextLine().trim();
-
+        // Si l'edat introduida no son digits o no pasa la validació de l'edat, ens fiquem en un bucle fins que l'edat sigui correcte
         while (!isAllDigits(edatInput) || !validarEdat(Integer.parseInt(edatInput))) {
             System.out.println("Edat no vàlida. Introdueix un número entre 18 i 100.");
             System.out.print("Introdueix l'edat del client (18-100): ");
@@ -1086,31 +1096,38 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testLlegirFactors"
      */
     public static ArrayList<String> llegirFactors(Scanner scanner) {
+        // Creem una llista per emmagatzemar els factors
         ArrayList<String> factors = new ArrayList<>();
-
-        System.out.print("Introdueix el primer factor ('autònom' o  'empresa'): ");
+    
+        // Sol·licitem el primer factor
+        System.out.print("Introdueix el primer factor ('autònom' o 'empresa'): ");
         String factor1 = scanner.nextLine().trim();
-
+    
+        // Validem que el primer factor sigui vàlid. Repetim fins que l'usuari introdueixi una opció correcta
         while (!factor1.equals("autònom") && !factor1.equals("empresa")) {
             System.out.println("Factor no vàlid. Ha de ser 'autònom' o 'empresa'.");
-            System.out.print("Introdueix el primer factor ('autònom' o  'empresa'): ");
+            System.out.print("Introdueix el primer factor ('autònom' o 'empresa'): ");
             factor1 = scanner.nextLine().trim();
         }
         factors.add(factor1);
-
+    
+        // Determinem el missatge segons el primer factor
         String promptFactor2 = factor1.equals("autònom")
                 ? "Introdueix el segon factor ('risc alt' o 'risc mitjà'): "
                 : "Introdueix el segon factor ('risc alt', 'risc baix' o 'risc mitjà'): ";
-        
+    
+        // Sol·licitem el segon factor
         System.out.print(promptFactor2);
         String factor2 = scanner.nextLine().trim();
-
+    
+        // Validem el segon factor segons el primer
         while (true) {
             if (factor1.equals("autònom")) {
+                // Per a 'autònom', només s'accepten 'risc alt' o 'risc mitjà'
                 if (factor2.equals("risc alt") || factor2.equals("risc mitjà")) break;
                 System.out.println("Factor no vàlid. Per a autònoms només pot ser 'risc alt' o 'risc mitjà'.");
-            }
-            else {
+            } else {
+                // Per a 'empresa', s'accepten 'risc alt', 'risc mitjà' o 'risc baix'
                 if (factor2.equals("risc alt") || factor2.equals("risc mitjà") || factor2.equals("risc baix")) break;
                 System.out.println("Factor no vàlid. Ha de ser 'risc alt', 'risc baix' o 'risc mitjà'.");
             }
@@ -1118,9 +1135,10 @@ Impostos:  21% (14.41)                     Total: 83.04
             factor2 = scanner.nextLine().trim();
         }
         factors.add(factor2);
-
+    
         return factors;
     }
+    
     
     /**
      * Demana i valida un descompe
@@ -1136,9 +1154,11 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testLlegirDescompte"
      */
     public static double llegirDescompte(Scanner scanner) {
+        // Introduim el descompte de les operacions
         System.out.print("Introdueix el descompte (0-20): ");
         String descompte = scanner.nextLine().trim();
 
+        // Si el descompte no pasa la validació, repetim fins que sigui valid
         while (!descompte.matches("\\d+(\\.\\d+)?") || !validarDescompte(Double.parseDouble(descompte))) {
             System.out.println("Descompte no vàlid. Ha de ser un número entre 0 i 20.");
             System.out.print("Introdueix el descompte (0-20): ");
@@ -1177,22 +1197,24 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testAfegirClientMenu"
      */
     public static ArrayList<String> afegirClientMenu(Scanner scanner) {
-        ArrayList<String> linies = new ArrayList<>();
-        linies.add("=== Afegir Client ===");
+        ArrayList<String> linies = new ArrayList<>(); // Fem una llista per ficar les frases/titols
+        linies.add("=== Afegir Client ==="); // Fiquem el titol
 
+        // Llegim el nom, l'edat i els factors
         String nom = llegirNom(scanner);
         int edat = llegirEdat(scanner);
         ArrayList<String> factors = llegirFactors(scanner);
 
+        // Si els factos no pasan la validacio, mostrarà missage d'error
         if (!validarFactors(factors.toArray(new String[0]))) {
             linies.add("Els factors no són vàlids.");
             return linies;
         }
         
-        double descompte = llegirDescompte(scanner);
+        double descompte = llegirDescompte(scanner); // Llegim el descompte
 
-        String novaClau = afegirClient(nom, edat, factors, descompte);
-        linies.add("S'ha afegit el client amb clau " + novaClau + ".");
+        String novaClau = afegirClient(nom, edat, factors, descompte); // Afegim el nom, edat, factors i descomptes llegits
+        linies.add("S'ha afegit el client amb clau " + novaClau + "."); // Fiquem una linia de confirmació quan s'ha afegit
 
         return linies;
     }
@@ -1237,48 +1259,55 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testModificarClientMenu"
      */
     public static ArrayList<String> modificarClientMenu(Scanner scanner) {
-        ArrayList<String> linies = new ArrayList<>();
-        linies.add("=== Modificar Client ===");
+        ArrayList<String> linies = new ArrayList<>(); // Fem una llista per ficar les frases/titols
+        linies.add("=== Modificar Client ==="); // Fiquem el titol
 
-        System.out.print("Introdueix la clau del client a modificar (per exemple, 'client_100'): ");
+        System.out.print("Introdueix la clau del client a modificar (per exemple, 'client_100'): "); // Introduim la clau del client que volem modificar
         String clauClient = scanner.nextLine().trim();
+        // Si la clau del client no coincideix, mostrarem missatge d'error
         if (!clients.containsKey(clauClient)) {
             linies.add("Client amb clau " + clauClient + " no existeix.");
             return linies;
         }
 
+        // Introduim el camp que volem modificar del client
         linies.add("Camps disponibles per modificar: nom, edat, factors, descompte");
         System.out.print("Introdueix el camp que vols modificar: ");
         String camp = scanner.nextLine().trim();
+        // Si el camp no existeix, mostrarem missatge d'error
         if (!Arrays.asList("nom", "edat", "factors", "descompte").contains(camp)) {
             linies.add("El camp " + camp + " no és vàlid.");
             return linies;
         }
 
+        // Farem diferents casos depenent del camp que volem modificar
         Object nouValor = switch (camp) {
-            case "nom" -> llegirNom(scanner);
-            case "edat" -> llegirEdat(scanner);
+            case "nom" -> llegirNom(scanner); // Llegim el nom nou que volem
+            case "edat" -> llegirEdat(scanner); // Llegim l'edat nova que volem
             case "factors" -> {
-                ArrayList<String> factors = llegirFactors(scanner);
+                ArrayList<String> factors = llegirFactors(scanner); // Llegim el factor i el fiquem en una llista
+                // Si la validacio dels factos no es correcte, mostrem missatge d'error
                 if (!validarFactors(factors.toArray(new String[0]))) {
                     linies.add("Els factors no són vàlids.");
                     yield null;
                 }
                 yield factors;
             }
-            case "descompte" -> llegirDescompte(scanner);
-            default -> null;
+            case "descompte" -> llegirDescompte(scanner); // Llegim el nom descompte que volem
+            default -> null; // Per defecte, sera null
         };
 
+        // Si el nouValor es null, regresem als missatges principals
         if (nouValor == null) {
             return linies;
         }
 
-        String resultat = modificarClient(clauClient, camp, nouValor);
+        String resultat = modificarClient(clauClient, camp, nouValor); // Modifiquem el client trucant a la funció amb els parametres necessaris
+        // Si el resultat no es equivalent a "OK", mostrem missatge d'error
         if (!resultat.equals("OK")) {
             linies.add(resultat);
         } else {
-            linies.add("S'ha modificat el client " + clauClient + ".");
+            linies.add("S'ha modificat el client " + clauClient + "."); // Al contrari, fiquem missatge de confirmació
         }
 
         return linies;
@@ -1304,22 +1333,25 @@ Impostos:  21% (14.41)                     Total: 83.04
      * @test ./runTest.sh "com.exercicis.TestExercici0#testEsborrarClientMenu"
      */
     public static ArrayList<String> esborrarClientMenu(Scanner scanner) {
-        ArrayList<String> linies = new ArrayList<>();
-        linies.add("=== Esborrar Client ===");
+        ArrayList<String> linies = new ArrayList<>(); // Fem una llista per ficar les frases/titols
+        linies.add("=== Esborrar Client ==="); // Fiquem el titol
 
+        // Introduim la clau del client que volem esborrar
         System.out.print("Introdueix la clau del client a esborrar (per exemple, 'client_100'): ");
         String clauClient = scanner.nextLine().trim();
-
+        // Si la clau del client no hi està al HashMap de clients, mostrem missatge d'error
         if (!clients.containsKey(clauClient)) {
             linies.add("Client amb clau " + clauClient + " no existeix.");
             return linies;
         }
-
+        // Posem en una variable el resultat de l'eliminació
         String resultat = esborrarClient(clauClient);
+        
+        // Si el resultat no es "OK", mostrem missatge d'error
         if (!resultat.equals("OK")) {
             linies.add(resultat);
         } else {
-            linies.add("S'ha esborrat el client " + clauClient + ".");
+            linies.add("S'ha esborrat el client " + clauClient + "."); // Sino, mostrem missatge de confirmació
         }
 
         return linies;
@@ -1352,9 +1384,8 @@ Impostos:  21% (14.41)                     Total: 83.04
             dibuixarLlista(menu);
             dibuixarLlista(resultat);
         
-
+            // Depenent de l'opicó que nosaltres escollim, anirem a un lloc del menu o un altre
             String opcio = obtenirOpcio(scanner);
-
             switch (opcio.toLowerCase(Locale.ROOT)) {
                 case "sortir":
                     dibuixarLlista(new ArrayList<>(List.of("Fins aviat!")));
@@ -1375,7 +1406,7 @@ Impostos:  21% (14.41)                     Total: 83.04
                 case "llistar clients":
                     resultat = getLlistarClientsMenu();
                     break;
-
+                // Si l'opció no es correcte, mostrarem missatge d'error
                 default:
                     resultat = new ArrayList<>(List.of("Opció no vàlida. Torna a intentar-ho."));
             }
