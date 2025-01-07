@@ -87,13 +87,14 @@ public class Exercici1 {
      * @test ./runTest.sh "com.exercicis.TestExercici1#testPrintBoardWithLargeNumbers"
      */
     public static void printBoard() {
+        // Creamos la tabla de juego donde se mostraran todos los numeros
         System.out.println("+----+----+----+----+");
         for (int[] row : board) {
             for (int cell : row) {
                 if (cell == 0) {
-                    System.out.printf("|    ", cell == 0 ? "" : cell);
+                    System.out.printf("|    ", cell == 0 ? "" : cell); // Si el numero es 0 muestra la casilla vacia 
                 } else {
-                    System.out.printf("|%4d", cell == 0 ? "" : cell);
+                    System.out.printf("|%4d", cell == 0 ? "" : cell); // Si no, muestra el numero con acho de 4 alineado a la derecha
                 }
             }
             System.out.println("|");
@@ -188,7 +189,7 @@ public class Exercici1 {
                 }
             }
 
-            // Actualizar board
+            // Actualizamos la tabla
             board[row] = finalRow;
         }
     }
@@ -229,6 +230,7 @@ public class Exercici1 {
      */
     public static void moveRight() {
         for (int row = 0; row < SIZE; row++) {
+            // Temporal para guardar los numeros
             int[] newRow = new int[SIZE];
             int newIndex = SIZE - 1;
 
@@ -300,6 +302,7 @@ public class Exercici1 {
      */
     public static void moveUp() {
         for (int col = 0; col < SIZE; col++) {
+            // Temporal para guardar los numeros
             int[] newCol = new int[SIZE];
             int newIndex = 0;
 
@@ -372,6 +375,7 @@ public class Exercici1 {
      */
     public static void moveDown() {
         for (int col = 0; col < SIZE; col++) {
+            // Temporal para guardar los numeros
             int[] newCol = new int[SIZE];
             int newIndex = SIZE - 1;
 
@@ -427,6 +431,7 @@ public class Exercici1 {
      */
     public static String isGameFinished() {
         for (int row = 0; row < SIZE; row++) {
+            // Si en la tabla se llega la suma de 128, has ganado el juego
             for (int col = 0; col < SIZE; col++) {
                 if (board[row][col] == 128) {
                     return "win";
@@ -437,16 +442,20 @@ public class Exercici1 {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
                 if (board[row][col] == 0) {
-                    return "continue";
+                    return "continue"; // Si hay una celda vacía (0), el juego puede continuar.
                 }
+                // Comprueba si hay números adyacentes iguales verticalmente
                 if (row > 0 && board[row][col] == board[row - 1][col]) {
-                    return "continue";
+                    return "continue"; // Si hay números iguales arriba, el juego puede continuar.
                 }
+                // Comprueba si hay números adyacentes iguales horizontalmente
                 if (col > 0 && board[row][col] == board[row][col - 1]) {
-                    return "continue";
+                    return "continue"; // Si hay números iguales a la izquierda, el juego puede continuar.
                 }
             }
         }
+
+        // Si no se cumple nada de lo anterior, pierdes el juego
         return "lost";
     }
 
